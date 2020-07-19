@@ -10,15 +10,14 @@ public class Main {
     public static void main(String...args) throws IOException {
         UserService us = new UserService();
 
-        BufferedReader br = new BufferedReader(new FileReader("residents.csv"));
-        try {
+        try (BufferedReader br = new BufferedReader(new FileReader("residents.csv"))) {
             String line = br.readLine();
 
-            List<User> users = new ArrayList<User>();
+            List<User> users = new ArrayList<>();
 
             while (line != null) {
                 String[] sa = line.split(",");
-                if(Integer.parseInt(sa[1])>=0 && validEmail(sa[2])){
+                if (Integer.parseInt(sa[1]) >= 0 && validEmail(sa[2])) {
                     users.add(new User(sa[0], Integer.parseInt(sa[1]), sa[2]));
                 }
 
@@ -26,8 +25,6 @@ public class Main {
             }
             users.stream().sorted(Comparator.comparing(User::getName)).forEach(us::saveUser);
 
-        } finally {
-            br.close();
         }
     }
     public static boolean validEmail(String mail) {
