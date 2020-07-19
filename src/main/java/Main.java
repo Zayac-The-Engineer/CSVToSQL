@@ -24,8 +24,7 @@ public class Main {
 
                 line = br.readLine();
             }
-            users.stream().sorted(Comparator.comparing(User::getName));
-            users.forEach(us::saveUser);
+            users.stream().sorted(Comparator.comparing(User::getName)).forEach(us::saveUser);
 
         } finally {
             br.close();
